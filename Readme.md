@@ -86,3 +86,7 @@ Use this software responsibly. Be aware of the terms of service of any online pl
 
 * Improved server selection algorithms based on ping and other factors.
 * Customizable settings for more advanced users.
+
+## About
+
+VCT (Voice Chat Tunnel) is a tool designed to address voice chat problems experienced by Valorant players in Egypt. It provides a low-latency VPN connection optimized for voice communication, reducing lag and improving the quality of in-game voice chat.
