@@ -13,19 +13,19 @@ This is a fork of Kemo's Voice Chat Tunnel (VCT) project, with bug fixes, minor 
 
 ## Features
 
-* **Automatic Server Selection:** VCT automatically selects a VPN server optimized for low latency, ideal for voice chat.
 * **Easy-to-Use Interface:** A simple and clean GUI makes connecting and disconnecting a breeze.
 * **Minimizes to Tray:** Keeps VCT running discreetly in the background.
 * **Auto-Startup Option:** Configure VCT to start automatically with Windows.
-* **Discord Integration:** A quick link to join the VCT Discord server for support and community interaction.
+
 
 ## How to Use
 
-1. **Download:** Download the latest release from the [Releases](Releases_Link_Here) section.
-2. **Extract:** Extract the downloaded zip file.
-3. **Run:** Execute the `VCT.exe` file.
+1. **Download:** Download the latest release from the [Releases](https://github.com/GangaHacker/VoiceChatTunnel/releases) section.
+2. **Run:** Execute the `VCT.exe` file.
+3. **Choose Server:** Choose one of the first few servers they have best ping and score(Quality).
 4. **Connect:** Click the power button in the main window to connect to the selected VPN server.
 5. **Disconnect:** Click the power button again to disconnect.
+Note: Some Dependencies might be missing incase of that error, in that case install [OpenVpn](https://openvpn.net/) or SoftEther VPN for the missing Dependencies or Send me the error and I'll try to add them with future patchs.
 
 ## Configuration
 
@@ -33,10 +33,9 @@ VCT currently doesn't offer extensive configuration options. The focus is on sim
 
 ## Building from Source (For Developers)
 
-1. **Clone the Repository:** `git clone https://github.com/GangaHacker5/VCT`
-2. **Dependencies:**  [List specific dependencies and versions here]
-3. **Build:** Open the solution in Visual Studio and build the project.
-
+1. **Clone the Repository:** `https://github.com/GangaHacker/VoiceChatTunnel`
+2. **Dependencies:**  [All should be included in these files]
+3. **Build:** This was built on MSVs studio ![Project Configs](ProjectProperty.jpg)
 
 ## Troubleshooting
 
@@ -47,7 +46,12 @@ VCT currently doesn't offer extensive configuration options. The focus is on sim
 
 ## Known Issues
 
-* The application may not disconnect properly if the VPN adapter was already active before VCT was launched. A workaround is to manually disconnect the VPN through Windows settings before starting VCT.
+* **Error:** Undefined RAS Dail Error (5010) (CreateIPForwardEntry) ![Error](UndefinedRASDailError(5010)(CreateIPForwardEntry).jpg)
+* **Solution:** Restart your PC, this error happens because the program was ended before it could terminate a previous connection. 
+
+* **Error:** You are alread connected to a VCT Tunnel. Please disconnect from it then press OK to try again. (TIP: Use the network icon in the taskbar, then press on VCT then press disconnect) ![Error](CommonError2.jpg)
+* **Solution:** Restart your PC, this error happens because the program was ended before it could terminate a previous connection. 
+
 
 [Include a screenshot or GIF here]
 
@@ -70,7 +74,9 @@ Contributions are welcome! If you find any bugs or have suggestions for improvem
 
 ## License
 
+MIT License
 
+Copyright (c) 2024 Ganga Great Hacker Ducker Stucker Pew Pew
 
 ## Disclaimer
 
