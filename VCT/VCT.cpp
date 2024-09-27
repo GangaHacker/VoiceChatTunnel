@@ -357,10 +357,11 @@ int main(int, char**)
         }
         else
         {
+            ImGui::SetCursorPos(ImVec2(ImGui::GetCursorStartPos().x+32,ImGui::GetCursorPosY())); // Reset cursor position
             if (ImGui::BeginChild("#servers", ImVec2(0, windowSize.y - 160), false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize ))
             {
                 
-                ImGui::SetWindowFontScale(0.8f);
+                ImGui::SetWindowFontScale(1.00f);
                 //ImVec2 ServersChildPos = ImGui::GetWindowPos();
                 //ServersChildPos.x += 25;
                 //ImGui::SetWindowPos("#servers", ServersChildPos);
