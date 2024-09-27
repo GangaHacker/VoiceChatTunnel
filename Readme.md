@@ -9,7 +9,7 @@ This is a fork of Kemo's Voice Chat Tunnel (VCT) project, with bug fixes, minor 
 * **Improved:** Clarity of connection status messages.
 * **Added:** Tooltips to clarify the functionality of UI elements.
 * **Added:** Ping to servers and score display for better server selection.
-!(MyGoldGreen)[Porgram.jpg]
+![MyGoldGreen](Porgram.jpg)
 
 ## Features
 
