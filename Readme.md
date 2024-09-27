@@ -1,6 +1,6 @@
 # VCT (Voice Chat Tunnel) - GangaHacker's Fork
 
-This is a fork of Kemo's Voice Chat Tunnel (VCT) project, with bug fixes, minor feature enhancements, and quality-of-life improvements. The original project provides a simple VPN solution optimized for voice chat applications like Discord, prioritizing low latency connections.
+This is a fork of Kemo's Voice Chat Tunnel (VCT) project, with bug fixes, minor feature enhancements, and quality-of-life improvements. The original project provides a simple VPN solution optimized for voice chat applications like Discord, prioritizing low latency connections for valorant or league of legends voice chat and others.
 
 ## Changes in this Fork
 
