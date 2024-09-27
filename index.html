@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-site-verification" content="2Ty5-99LKC6WmkIW4y_0K1URwT0dJllbbHAl3CDhU4c" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCT (Voice Chat Tunnel) - GangaHacker's Fork</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="readme-content"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        fetch('Readme.md')  // Fetch your README.md file
+            .then(response => response.text())
+            .then(markdown => {
+                const html = marked.parse(markdown); // Convert Markdown to HTML
+                document.getElementById('readme-content').innerHTML = html; // Display it
+            });
+    </script>
+</body>
+</html>
