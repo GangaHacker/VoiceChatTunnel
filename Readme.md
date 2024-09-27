@@ -40,8 +40,7 @@ VCT currently doesn't offer extensive configuration options. The focus is on sim
 ## Troubleshooting
 
 * **Connection Issues:** If you're unable to connect, ensure you have a stable internet connection. Try restarting VCT or your computer. Check firewall settings.
-* **Disconnection Issues:** If VCT doesn't disconnect cleanly, try manually disconnecting through the Windows network settings.
-* **"Already Connected" Error:** If you receive this error, make sure any previous VCT connections are closed.
+* **"Already Connected" Error:** If you receive this error, make sure any previous VCT connections are closed.(Restart your PC)
 * **No Servers Found:** Verify your internet connection and try refreshing the server list. Consider temporarily disabling firewall or antivirus software.
 
 ## Known Issues
