@@ -56,7 +56,7 @@ LONG CALLBACK CrashHandler(EXCEPTION_POINTERS* e)
 int main(int, char**)
 {
     ShowWindow(GetConsoleWindow(), SW_HIDE);
-    (void)freopen("log.txt", "w", stdout);
+    //(void)freopen("log.txt", "w", stdout);
 
     SetUnhandledExceptionFilter(CrashHandler);
 
@@ -95,7 +95,7 @@ int main(int, char**)
     ShowWindow(hwnd, SW_SHOWDEFAULT);
     UpdateWindow(hwnd);
 
-    SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
+    SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_SHOWWINDOW|SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
 
     if (!CreateDeviceD3D(hwnd))
     {
@@ -200,12 +200,12 @@ int main(int, char**)
         // draw rect at the top of the view port
         auto rectPos = ImRect(viewport->Pos.x, viewport->Pos.y, viewport->Pos.x + viewport->Size.x, viewport->Pos.y + 37);
 
-        ImGui::GetWindowDrawList()->AddRectFilled(rectPos.Min, rectPos.Max, ImColor(28, 36, 49, 255), 2.0f);
+        ImGui::GetWindowDrawList()->AddRectFilled(rectPos.Min, rectPos.Max, ImColor(0, 32, 25, 255), 1.0f);
 
         ImGui::SetCursorPosY(8);
         ImGui::SetCursorPosX(10);
 
-        ImGui::TextColored({ 0.498f, 0.518f, 0.545f, 0.7f }, "VCT|Made by Kemo|Eddited by GangaHacker");
+        ImGui::TextColored({ 1.0f, 0.84313f, 0.0f, 1.0f }, "VCT|Made by Kemo| GangaHacker Edit");
 
         ImGui::SameLine();
 
@@ -214,10 +214,10 @@ int main(int, char**)
         if (ImGui::ClickableText(ICON_MD_HEADPHONES))
         {
             // ShellExecute(0, 0, L"https://discord.gg/", 0, 0, SW_SHOW);
-            system("start https://discord.gg/");
+            system("start https://github.com/GangaHacker/VoiceChatTunnel");
         }
 
-        ImGui::HelpMarker("Join our discord server for help");
+        ImGui::HelpMarker("Go to my github for help");
 
         ImGui::SameLine();
 
@@ -245,7 +245,7 @@ int main(int, char**)
 
         ImGui::SetCursorPosY(55);
 
-        if (ImGui::BeginChild("#topPart", ImVec2(0, 130), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
+        if (ImGui::BeginChild("#topPart", ImVec2(0, 130), false, ImGuiWindowFlags_NoNav|ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
         {
             //disconnect
             if (waitmeonce_Disconnecting == 0)
@@ -353,13 +353,17 @@ int main(int, char**)
         {
             ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 70);
 
-            ImGui::Spinner("##spinner", 15, 6, ImGui::GetColorU32(ImVec4(1.00f, 1.00f, 1.00f, 1.00f)));
+            ImGui::Spinner("##spinner", 15, 6, ImGui::GetColorU32(ImVec4(1.0f, 0.84313f, 0.0f, 1.0f)));
         }
         else
         {
-            if (ImGui::BeginChild("#servers", ImVec2(0, windowSize.y - 160), false))
+            if (ImGui::BeginChild("#servers", ImVec2(0, windowSize.y - 160), false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize ))
             {
-                ImGui::SetWindowFontScale(0.75f);
+                
+                ImGui::SetWindowFontScale(0.8f);
+                //ImVec2 ServersChildPos = ImGui::GetWindowPos();
+                //ServersChildPos.x += 25;
+                //ImGui::SetWindowPos("#servers", ServersChildPos);
                 int iteratorServerpings = 0;
                 for (auto&& p : vpn->serversList)
                 {
@@ -367,7 +371,7 @@ int main(int, char**)
                     static auto buttonColorActive = IM_COL32(63, 83, 115, 255);
 
                     bool isActive = vpn->currentServer == p;
-                    if (ImGui::ColoredButton((p.first + ",Ping:" + std::format("{:.1f}",vpn->serverScoresPings[iteratorServerpings].second) + "ms ,Score" + std::format("{:.3f}", ((float)vpn->serverScoresPings[iteratorServerpings].first / 1000000))).c_str(),
+                    if (ImGui::ColoredButton(p.first.empty() ? ("error") : (p.first + ",Ping:" + std::format("{:.1f}", vpn->serverScoresPings[iteratorServerpings].second) + "ms ,Score" + std::format("{:.3f}", ((float)vpn->serverScoresPings[iteratorServerpings].first / 1000000))).c_str(),
                             ImVec2(0, 50.0f),
                             IM_COL32(255, 255, 255, 255),
                             isActive ? buttonColorActive : buttonColorDisabled,

@@ -44,8 +44,15 @@ public:
         while (in.read_row(HostName, IP, Score, Ping, Speed, CountryLong, CountryShort))
         {
             // printf("IP: %s - Round network trip: %i\n", IP.c_str(), Ping);
-            this->serversList.push_back({ IP , (HostName + ".opengw.net") }); //+ ",Ping:" + std::to_string(Ping) + "ms" + ",Score"+std::format("{:.3f}",((float)Score/1000000))
-            this->serverScoresPings.push_back({ Score, Ping });
+            if (IP.empty()|| Score==NULL)
+            {
+                continue;
+            }
+            else
+            {
+                this->serversList.push_back({ IP, (HostName + ".opengw.net") }); //+ ",Ping:" + std::to_string(Ping) + "ms" + ",Score"+std::format("{:.3f}",((float)Score/1000000))
+                this->serverScoresPings.push_back({ Score, Ping });
+            }
         }
     }
 

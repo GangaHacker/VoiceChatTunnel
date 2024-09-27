@@ -274,12 +274,12 @@ namespace ImGui
         ImVec4* colors = ImGui::GetStyle().Colors;
         colors[ImGuiCol_Text] = ImVec4(1.f, 1.f, 1.f, 1.00f);
         colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
-        colors[ImGuiCol_WindowBg] = ColorFromBytes(10, 14, 20);
-        colors[ImGuiCol_ChildBg] = ColorFromBytes(10, 14, 20);
+        colors[ImGuiCol_WindowBg] = ColorFromBytes(0, 32, 25);
+        colors[ImGuiCol_ChildBg] = ColorFromBytes(0, 32, 25);
         colors[ImGuiCol_PopupBg] = ImVec4(0.19f, 0.19f, 0.19f, 0.92f);
         colors[ImGuiCol_Border] = ImVec4(0.518f, 0.671f, 0.922f, 0.29f);
         colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.24f);
-        colors[ImGuiCol_FrameBg] = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
+        colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.84313f, 0.0f, 1.0f);
         colors[ImGuiCol_FrameBgHovered] = ImVec4(0.19f, 0.19f, 0.19f, 0.54f);
         colors[ImGuiCol_FrameBgActive] = ImVec4(0.20f, 0.22f, 0.23f, 1.00f);
         colors[ImGuiCol_TitleBg] = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);

@@ -1,0 +1,8 @@
+[getInterface] Found the interface!
+[isConnected] Found the interface but we can't find it's handle.
+[getInterface] Found the interface!
+[isConnected] Found the interface but we can't find it's handle.
+[getInterface] Found the interface!
+[isConnected] Found the interface but we can't find it's handle.
+[getInterface] Found the interface!
+[isConnected] Found the interface but we can't find it's handle.
