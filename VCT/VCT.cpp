@@ -21,7 +21,7 @@
 #include "resources/resources.h"
 #include "vpn.h"
 
-constexpr auto WINDOW_TITLE = L"VCT (Made by kemo)";
+constexpr auto WINDOW_TITLE = L"VCT (Made by kemo)(Eddited by GangaHacker)";
 constexpr auto WINDOW_WIDTH = 400;
 constexpr auto WINDOW_HEIGHT = 400;
 
@@ -31,7 +31,7 @@ constexpr auto VERSION = 2.1;
 
 inline auto CheckForUpdate()
 {
-    httplib::Client cli("https://kem.ooo");
+    /*httplib::Client cli("https://kem.ooo");
 
     auto r = cli.Get("/VCT");
 
@@ -43,7 +43,7 @@ inline auto CheckForUpdate()
         {
             MessageBoxA(nullptr, "A new version of VCT is available!", "VCT", MB_OK | MB_ICONINFORMATION);
         }
-    }
+    }*/
 }
 
 LONG CALLBACK CrashHandler(EXCEPTION_POINTERS* e)
@@ -67,8 +67,8 @@ int main(int, char**)
             delete vpn;
         });
 
-    std::thread updateThread(CheckForUpdate);
-    updateThread.detach();
+    /*std::thread updateThread(CheckForUpdate);
+    updateThread.detach();*/
 
     ImGui_ImplWin32_EnableDpiAwareness();
     WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, WINDOW_TITLE, NULL };
@@ -105,15 +105,15 @@ int main(int, char**)
     }
 
     // sorry it's the only way i could think of
-    std::thread trayThread(
-        [&]()
-        {
+    //std::thread trayThread(
+    //    [&]()
+    //    {
             while (!ShowTrayIcon(hwnd))
             {
             };
-        });
+        //});
 
-    trayThread.detach();
+    //trayThread.detach();
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -152,6 +152,9 @@ int main(int, char**)
 
     // Main loop
     bool done = false;
+
+    int waitmeonce_Disconnecting = 1; //Added By GangaHacker
+    int waitmeonce_connecting = 1; //Added By GangaHacker
     while (!done)
     {
         MSG msg;
@@ -202,7 +205,7 @@ int main(int, char**)
         ImGui::SetCursorPosY(8);
         ImGui::SetCursorPosX(10);
 
-        ImGui::TextColored({ 0.498f, 0.518f, 0.545f, 1.0f }, "VCT | Made by Kemo");
+        ImGui::TextColored({ 0.498f, 0.518f, 0.545f, 0.7f }, "VCT|Made by Kemo|Eddited by GangaHacker");
 
         ImGui::SameLine();
 
@@ -210,8 +213,8 @@ int main(int, char**)
 
         if (ImGui::ClickableText(ICON_MD_HEADPHONES))
         {
-            // ShellExecute(0, 0, L"https://discord.gg/5WEPu6tSvA", 0, 0, SW_SHOW);
-            system("start https://discord.gg/5WEPu6tSvA");
+            // ShellExecute(0, 0, L"https://discord.gg/", 0, 0, SW_SHOW);
+            system("start https://discord.gg/");
         }
 
         ImGui::HelpMarker("Join our discord server for help");
@@ -244,6 +247,45 @@ int main(int, char**)
 
         if (ImGui::BeginChild("#topPart", ImVec2(0, 130), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
         {
+            //disconnect
+            if (waitmeonce_Disconnecting == 0)
+            {
+                auto ret = vpn->Disconnect();
+
+                if (ret)
+                {
+                    currColor = DisconnectedColor;
+                    statusText = "DISCONNECTED";
+                    serverText = "--------";
+                    //ImGui::Spinner("##spinner", 15, 6, ImGui::GetColorU32(ImVec4(1.00f, 1.00f, 1.00f, 1.00f)));
+                }
+                else
+                {
+                    currColor = ConnectedColor;
+                    statusText = "CONNECTED";
+                }
+                waitmeonce_Disconnecting = 1;
+            };
+            if (waitmeonce_connecting == 0)
+            {
+
+                auto ret = vpn->Connect();
+
+                if (!ret)
+                {
+                    currColor = DisconnectedColor;
+                    statusText = "DISCONNECTED";
+                }
+                else
+                {
+                    currColor = ConnectedColor;
+                    statusText = "CONNECTED";
+                    serverText = vpn->currentServer.first.c_str();
+                    //ImGui::Spinner("##spinner", 15, 6, ImGui::GetColorU32(ImVec4(1.00f, 1.00f, 1.00f, 1.00f)));
+                }
+                waitmeonce_connecting = 1;
+            };
+
             if (ImGui::PowerButton("#connectButton",
                     ImVec2(120.0f, 120.0f),
                     IM_COL32(28, 36, 49, 255),
@@ -255,54 +297,23 @@ int main(int, char**)
                     currColor = DisconnectedColor;
                     statusText = "DISCONNECTING";
 
-                    std::thread disconnectThread(
-                        []()
-                        {
-                            auto ret = vpn->Disconnect();
+                    if (waitmeonce_Disconnecting == 1)
+                    {
+                        waitmeonce_Disconnecting = 0;
+                    }
 
-                            if (ret)
-                            {
-                                currColor = DisconnectedColor;
-                                statusText = "DISCONNECTED";
-                                serverText = "--------";
-                            }
-                            /*
-                            else
-                            {
-                                currColor = ConnectedColor;
-                                statusText = "CONNECTED";
-                                // ImGui::Spinner("##spinner", 15, 6, ImGui::GetColorU32(ImVec4(1.00f, 1.00f, 1.00f, 1.00f)));
-                            }
-                            */
-                        });
-
-                    disconnectThread.detach();
                 }
                 else
                 {
                     currColor = ConnectedColor;
                     statusText = "CONNECTING";
 
-                    std::thread connectThread(
-                        []()
-                        {
-                            auto ret = vpn->Connect();
 
-                            if (!ret)
-                            {
-                                currColor = DisconnectedColor;
-                                statusText = "DISCONNECTED";
-                            }
-                            else
-                            {
-                                currColor = ConnectedColor;
-                                statusText = "CONNECTED";
-                                serverText = vpn->currentServer.first.c_str();
-                                // ImGui::Spinner("##spinner", 15, 6, ImGui::GetColorU32(ImVec4(1.00f, 1.00f, 1.00f, 1.00f)));
-                            }
-                        });
+                    if (waitmeonce_connecting == 1)
+                    {
+                        waitmeonce_connecting = 0;
+                    }
 
-                    connectThread.detach();
                 }
             }
 
@@ -348,17 +359,16 @@ int main(int, char**)
         {
             if (ImGui::BeginChild("#servers", ImVec2(0, windowSize.y - 160), false))
             {
-                ImGui::SetWindowFontScale(0.9f);
-
+                ImGui::SetWindowFontScale(0.75f);
+                int iteratorServerpings = 0;
                 for (auto&& p : vpn->serversList)
                 {
                     static auto buttonColorDisabled = IM_COL32(28, 36, 49, 255);
                     static auto buttonColorActive = IM_COL32(63, 83, 115, 255);
 
                     bool isActive = vpn->currentServer == p;
-
-                    if (ImGui::ColoredButton(p.first.c_str(),
-                            ImVec2(200.0f, 50.0f),
+                    if (ImGui::ColoredButton((p.first + ",Ping:" + std::format("{:.1f}",vpn->serverScoresPings[iteratorServerpings].second) + "ms ,Score" + std::format("{:.3f}", ((float)vpn->serverScoresPings[iteratorServerpings].first / 1000000))).c_str(),
+                            ImVec2(0, 50.0f),
                             IM_COL32(255, 255, 255, 255),
                             isActive ? buttonColorActive : buttonColorDisabled,
                             isActive ? buttonColorActive : buttonColorDisabled,
@@ -368,6 +378,7 @@ int main(int, char**)
                     }
 
                     ImGui::Spacing();
+                    iteratorServerpings++;
                 }
 
                 ImGui::EndChild();

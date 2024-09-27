@@ -96,10 +96,12 @@ void ShowContextMenu(HWND hwnd)
     HMENU hSubMenu = CreatePopupMenu();
     InsertMenu(hSubMenu, 0, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Creator: ");
     InsertMenu(hSubMenu, 1, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Kemo (twitter: @xkem0x)");
-    InsertMenu(hSubMenu, 4, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Special thanks to:");
-    InsertMenu(hSubMenu, 5, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Defaults - Ramy (twitter: @RamyWafik)");
-    InsertMenu(hSubMenu, 6, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"MadTitan (twitter: @MadTitan__)");
-    InsertMenu(hSubMenu, 7, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Sohila (twitter: @ananaymabye)");
+    InsertMenu(hSubMenu, 3, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Special thanks to: GangaHacker for Editing");
+    InsertMenu(hSubMenu, 5, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Special thanks to:");
+    InsertMenu(hSubMenu, 7, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Defaults - Ramy (twitter: @RamyWafik)");
+    InsertMenu(hSubMenu, 8, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"MadTitan (twitter: @MadTitan__)");
+    InsertMenu(hSubMenu, 9, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Sohila (twitter: @ananaymabye)");
+
 
     InsertMenu(hMenu, 1, MF_BYPOSITION | MF_POPUP, (UINT_PTR)hSubMenu, L"Credits: ");
 
