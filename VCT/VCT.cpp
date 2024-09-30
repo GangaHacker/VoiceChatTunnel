@@ -8,6 +8,7 @@
 #include <ipexport.h>
 #include <format>
 #include <dwmapi.h>
+#include <sstream>
 
 #pragma comment(lib, "Iphlpapi.lib")
 #pragma comment(lib, "Rasapi32.lib")
@@ -27,23 +28,58 @@ constexpr auto WINDOW_HEIGHT = 400;
 
 inline auto vpn = new VPN();
 
-constexpr auto VERSION = 2.1;
+constexpr float VERSION = 1.1;
 
-inline auto CheckForUpdate()
+inline void CheckForUpdate()
 {
-    /*httplib::Client cli("https://kem.ooo");
+    httplib::Client cli("https://raw.githubusercontent.com"); // Use raw.githubusercontent.com
 
-    auto r = cli.Get("/VCT");
+    auto res = cli.Get("/GangaHacker/VoiceChatTunnel-GangaHacker-Revamp/master/version.txt");
 
-    if (r->status == 200)
+    if (res && res->status == 200)
     {
-        auto version = std::stof(r->body);
-
-        if (version > VERSION)
+        try
         {
-            MessageBoxA(nullptr, "A new version of VCT is available!", "VCT", MB_OK | MB_ICONINFORMATION);
+            // Convert the response body (string) to a float
+            std::stringstream versionStream(res->body);
+            float latestVersion;
+            versionStream >> latestVersion;
+
+            if (latestVersion > VERSION)
+            {
+                // Construct the message box text with a clickable link
+                std::string message = "A new version of VCT is available!\n\nClick here to download the latest release:";
+                const char* url = "https://github.com/GangaHacker/VoiceChatTunnel-GangaHacker-Revamp/releases/latest"; // Use "latest"
+
+                // Display the message box
+                if (MessageBoxA(nullptr, message.c_str(), "VCT", MB_OK | MB_ICONINFORMATION) == IDOK)
+                {
+                    // Open the URL in the default browser when the user clicks OK
+                    ShellExecuteA(nullptr, "open", url, nullptr, nullptr, SW_SHOWNORMAL);
+                }
+            }
         }
-    }*/
+        catch (const std::exception& e)
+        {
+            // Handle potential errors during string to float conversion (e.g., invalid format in version.txt)
+            // You could log the error or show a more specific error message.
+            MessageBoxA(nullptr, ("Update check failed: " + std::string(e.what())).c_str(), "VCT - Update Error", MB_OK | MB_ICONERROR); //Added by Gemini
+        }
+    }
+    else
+    {
+        // Handle cases where the request failed (e.g., network error, file not found)
+        std::string error_msg;
+        if (!res)
+        {
+            error_msg = "Could not get response form Github servers, please check your internet connection";
+        }
+        else
+        {
+            error_msg = std::format("Error checking for updates, please check your internet connection. Status code: {}", res->status);
+        }
+        MessageBoxA(nullptr, error_msg.c_str(), "VCT - Update Error", MB_OK | MB_ICONERROR); //Added by Gemini
+    }
 }
 
 LONG CALLBACK CrashHandler(EXCEPTION_POINTERS* e)
@@ -67,8 +103,8 @@ int main(int, char**)
             delete vpn;
         });
 
-    /*std::thread updateThread(CheckForUpdate);
-    updateThread.detach();*/
+    std::thread updateThread(CheckForUpdate);
+    updateThread.detach();
 
     ImGui_ImplWin32_EnableDpiAwareness();
     WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, WINDOW_TITLE, NULL };
@@ -95,7 +131,7 @@ int main(int, char**)
     ShowWindow(hwnd, SW_SHOWDEFAULT);
     UpdateWindow(hwnd);
 
-    SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_SHOWWINDOW|SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
+    SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_SHOWWINDOW | SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
 
     if (!CreateDeviceD3D(hwnd))
     {
@@ -108,10 +144,10 @@ int main(int, char**)
     //std::thread trayThread(
     //    [&]()
     //    {
-            while (!ShowTrayIcon(hwnd))
-            {
-            };
-        //});
+    while (!ShowTrayIcon(hwnd))
+    {
+    };
+    //});
 
     //trayThread.detach();
 
@@ -168,7 +204,6 @@ int main(int, char**)
         if (done)
             break;
 
-
         if (isMinimized)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -208,7 +243,6 @@ int main(int, char**)
 
         ImGui::TextColored({ 1.0f, 0.84313f, 0.0f, 1.0f }, "VCT|Made by Kemo|GangaHacker Edit");
 
-
         //ImGui::SameLine();
         //ImGui::Indent(300);
         //// ... inside your ImGui window code ...
@@ -219,10 +253,8 @@ int main(int, char**)
         //}
         //// ...
 
-
         ImGui::Indent(320);
         ImGui::SameLine();
-
 
         if (ImGui::ClickableText(ICON_MD_HEADPHONES))
         {
@@ -258,7 +290,7 @@ int main(int, char**)
 
         ImGui::SetCursorPosY(55);
 
-        if (ImGui::BeginChild("#topPart", ImVec2(0, 130), false, ImGuiWindowFlags_NoNav|ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
+        if (ImGui::BeginChild("#topPart", ImVec2(0, 130), false, ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
         {
             //disconnect
             if (waitmeonce_Disconnecting == 0)
@@ -314,19 +346,16 @@ int main(int, char**)
                     {
                         waitmeonce_Disconnecting = 0;
                     }
-
                 }
                 else
                 {
                     currColor = ConnectedColor;
                     statusText = "CONNECTING";
 
-
                     if (waitmeonce_connecting == 1)
                     {
                         waitmeonce_connecting = 0;
                     }
-
                 }
             }
 
@@ -370,10 +399,10 @@ int main(int, char**)
         }
         else
         {
-            ImGui::SetCursorPos(ImVec2(ImGui::GetCursorStartPos().x+32,ImGui::GetCursorPosY())); // Reset cursor position
-            if (ImGui::BeginChild("#servers", ImVec2(0, windowSize.y - 160), false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize ))
+            ImGui::SetCursorPos(ImVec2(ImGui::GetCursorStartPos().x + 32, ImGui::GetCursorPosY())); // Reset cursor position
+            if (ImGui::BeginChild("#servers", ImVec2(0, windowSize.y - 160), false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
             {
-                
+
                 ImGui::SetWindowFontScale(1.00f);
                 //ImVec2 ServersChildPos = ImGui::GetWindowPos();
                 //ServersChildPos.x += 25;
