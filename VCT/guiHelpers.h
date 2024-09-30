@@ -102,7 +102,6 @@ void ShowContextMenu(HWND hwnd)
     InsertMenu(hSubMenu, 8, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"MadTitan (twitter: @MadTitan__)");
     InsertMenu(hSubMenu, 9, MF_BYPOSITION | MF_STRING | MF_GRAYED, ID_CREDITMENU, L"Sohila (twitter: @ananaymabye)");
 
-
     InsertMenu(hMenu, 1, MF_BYPOSITION | MF_POPUP, (UINT_PTR)hSubMenu, L"Credits: ");
 
     InsertMenu(hMenu, 2, MF_BYPOSITION | MF_SEPARATOR, 0, NULL);
@@ -187,6 +186,7 @@ void CleanupRenderTarget()
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 bool isMinimized = false;
+bool shutdownRequested = false;
 
 LRESULT WINAPI WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -195,6 +195,22 @@ LRESULT WINAPI WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     switch (msg)
     {
+    case WM_QUERYENDSESSION: // Handle shutdown query
+        shutdownRequested = true; // Set the flag
+        return true; // Allow shutdown
+
+    case WM_ENDSESSION: // Perform cleanup before shutdown
+        if (wParam) // Only if shutdown is proceeding
+        {
+            //vpn->Disconnect(); // Disconnect VPN
+            //delete vpn;
+            // ... any other cleanup ...
+
+            // Now it is safe to exit, after disconnecting VPN in EndSession
+            exit(0);
+        }
+        break;
+
 
     case WM_SIZE:
         if (g_pd3dDevice != NULL && wParam != SIZE_MINIMIZED)

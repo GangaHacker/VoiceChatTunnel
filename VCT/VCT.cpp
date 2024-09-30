@@ -155,7 +155,7 @@ int main(int, char**)
 
     int waitmeonce_Disconnecting = 1; //Added By GangaHacker
     int waitmeonce_connecting = 1; //Added By GangaHacker
-    while (!done)
+    while (!done && !shutdownRequested)
     {
         MSG msg;
         while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
@@ -167,6 +167,7 @@ int main(int, char**)
         }
         if (done)
             break;
+
 
         if (isMinimized)
         {
@@ -205,11 +206,23 @@ int main(int, char**)
         ImGui::SetCursorPosY(8);
         ImGui::SetCursorPosX(10);
 
-        ImGui::TextColored({ 1.0f, 0.84313f, 0.0f, 1.0f }, "VCT|Made by Kemo| GangaHacker Edit");
+        ImGui::TextColored({ 1.0f, 0.84313f, 0.0f, 1.0f }, "VCT|Made by Kemo|GangaHacker Edit");
 
-        ImGui::SameLine();
+
+        //ImGui::SameLine();
+        //ImGui::Indent(300);
+        //// ... inside your ImGui window code ...
+        //if (ImGui::ClickableText(ICON_MD_GOAT)) //Button("Simulate Shutdown"))
+        //{
+        //    PostMessage(hwnd, WM_QUERYENDSESSION, 0, 0);
+        //    PostMessage(hwnd, WM_ENDSESSION, TRUE, 0); // Simulate shutdown proceeding
+        //}
+        //// ...
+
 
         ImGui::Indent(320);
+        ImGui::SameLine();
+
 
         if (ImGui::ClickableText(ICON_MD_HEADPHONES))
         {
