@@ -28,7 +28,7 @@ constexpr auto WINDOW_HEIGHT = 400;
 
 inline auto vpn = new VPN();
 
-constexpr float VERSION = 1.1;
+constexpr float VERSION = 2.4;
 
 inline void CheckForUpdate()
 {
